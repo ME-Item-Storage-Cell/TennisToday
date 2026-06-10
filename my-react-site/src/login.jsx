@@ -1,16 +1,22 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from './supabase'
 
 export default function Login() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [phone, setPhone] = useState('')
   const [isSigningUp, setIsSigningUp] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [message, setMessage] = useState('')
+  const [error, setError] = useState('')
 
   async function signUp() {
     setLoading(true)
+    setMessage('')
+    setError('')
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -24,9 +30,9 @@ export default function Login() {
     })
 
     if (error) {
-      alert(error.message)
+      setError(error.message)
     } else {
-      alert('Check your email for confirmation')
+      setMessage('Check your email for confirmation')
     }
 
     setLoading(false)
@@ -34,6 +40,8 @@ export default function Login() {
 
   async function signIn() {
     setLoading(true)
+    setMessage('')
+    setError('')
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -41,7 +49,10 @@ export default function Login() {
     })
 
     if (error) {
-      alert(error.message)
+      setError(error.message)
+    } else {
+      setMessage('Signed in successfully')
+      navigate('/')
     }
 
     setLoading(false)
@@ -83,9 +94,12 @@ export default function Login() {
         </>
       )}
 
+      {message && <p style={{ color: 'green' }}>{message}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+
       {isSigningUp ? (
         <>
-          <button onClick={signUp} disabled={loading}>
+          <button type="button" onClick={signUp} disabled={loading}>
             Create account
           </button>
           <button type="button" onClick={() => setIsSigningUp(false)} disabled={loading}>
@@ -94,7 +108,7 @@ export default function Login() {
         </>
       ) : (
         <>
-          <button onClick={signIn} disabled={loading}>
+          <button type="button" onClick={signIn} disabled={loading}>
             Sign In
           </button>
           <button type="button" onClick={() => setIsSigningUp(true)} disabled={loading}>
