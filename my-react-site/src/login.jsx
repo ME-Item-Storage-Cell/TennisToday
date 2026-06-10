@@ -4,6 +4,9 @@ import { supabase } from './supabase'
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [displayName, setDisplayName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [isSigningUp, setIsSigningUp] = useState(false)
   const [loading, setLoading] = useState(false)
 
   async function signUp() {
@@ -12,6 +15,12 @@ export default function Login() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        data: {
+          display_name: displayName,
+          phone,
+        },
+      },
     })
 
     if (error) {
@@ -56,13 +65,43 @@ export default function Login() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button onClick={signIn} disabled={loading}>
-        Sign In
-      </button>
+      {isSigningUp && (
+        <>
+          <input
+            type="text"
+            placeholder="Display Name"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+          />
 
-      <button onClick={signUp} disabled={loading}>
-        Sign Up
-      </button>
+          <input
+            type="tel"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </>
+      )}
+
+      {isSigningUp ? (
+        <>
+          <button onClick={signUp} disabled={loading}>
+            Create account
+          </button>
+          <button type="button" onClick={() => setIsSigningUp(false)} disabled={loading}>
+            Switch to Sign In
+          </button>
+        </>
+      ) : (
+        <>
+          <button onClick={signIn} disabled={loading}>
+            Sign In
+          </button>
+          <button type="button" onClick={() => setIsSigningUp(true)} disabled={loading}>
+            Switch to Sign Up
+          </button>
+        </>
+      )}
     </div>
   )
 }
