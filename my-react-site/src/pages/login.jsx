@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { supabase } from './supabase'
+import { supabase } from '../supabase'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -52,7 +52,7 @@ export default function Login() {
       setError(error.message)
     } else {
       setMessage('Signed in successfully')
-      navigate('/')
+  
     }
 
     setLoading(false)

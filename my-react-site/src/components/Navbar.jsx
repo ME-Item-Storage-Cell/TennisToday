@@ -1,6 +1,27 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../supabase'
 
 export default function Navbar() {
+  const [session, setSession] = useState(null)
+
+  useEffect(() => {
+    async function loadSession() {
+      const { data } = await supabase.auth.getSession()
+      setSession(data.session)
+    }
+
+    loadSession()
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_, currentSession) => {
+      setSession(currentSession)
+    })
+
+    return () => {
+      authListener?.subscription?.unsubscribe()
+    }
+  }, [])
+
   return (
     <nav style={{
       display: 'flex',
@@ -15,9 +36,15 @@ export default function Navbar() {
         <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
           Home
         </Link>
-        <Link to="/login" style={{ padding: '0.5rem 1rem', background: '#007bff', color: '#fff', borderRadius: '4px', textDecoration: 'none' }}>
-          Login
-        </Link>
+        {session ? (
+          <Link to="/account" style={{ padding: '0.5rem 1rem', background: '#007bff', color: '#fff', borderRadius: '4px', textDecoration: 'none' }}>
+            Account
+          </Link>
+        ) : (
+          <Link to="/login" style={{ padding: '0.5rem 1rem', background: '#007bff', color: '#fff', borderRadius: '4px', textDecoration: 'none' }}>
+            Login
+          </Link>
+        )}
       </div>
     </nav>
   )
