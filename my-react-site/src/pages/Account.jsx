@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 
 export default function Account() {
   const [session, setSession] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function loadSession() {
@@ -28,6 +29,12 @@ export default function Account() {
       authListener?.subscription?.unsubscribe()
     }
   }, [])
+
+  useEffect(() => {
+    if (!loading && !session) {
+      navigate('/login', { replace: true })
+    }
+  }, [loading, session, navigate])
 
   const displayName = session?.user?.user_metadata?.display_name || 'Unknown'
   const phone = session?.user?.user_metadata?.phone || 'Unknown'
@@ -63,6 +70,25 @@ export default function Account() {
           </div>
 
           {error && <p style={{ color: 'red' }}>{error}</p>}
+
+          <button
+            type="button"
+            onClick={async () => {
+              setLoading(true)
+              setError('')
+              const { error } = await supabase.auth.signOut()
+              if (error) {
+                setError(error.message)
+                setLoading(false)
+              } else {
+                navigate('/login', { replace: true })
+              }
+            }}
+            disabled={loading}
+            style={{ marginTop: '1rem' }}
+          >
+            Sign out
+          </button>
         </div>
       )}
     </main>

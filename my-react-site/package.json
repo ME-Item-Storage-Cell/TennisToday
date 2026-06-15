@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:gh-pages": "vite build --base /TennisToday/ && node scripts/copy-index-to-404.js",
     "lint": "eslint .",
     "preview": "vite preview"
   },
