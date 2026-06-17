@@ -65,6 +65,18 @@ export default function CourtBooking() {
         const endTime = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`
         return `${startTime} - ${endTime}`
     }
+
+    const handleSlotClick = (court) => {
+        navigate('/booking', {
+            state: {
+                court,
+                date: selectedDate,
+                startTime: getTimeString(timeSlot),
+                endTime: getTimeString(timeSlot + 1),
+                timeRange: getTimeRange(timeSlot),
+            }
+        })
+    }
     
     const handleWheel = useCallback((e) => {
         e.preventDefault()
@@ -94,7 +106,7 @@ export default function CourtBooking() {
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Court Booking System</h1>
+            <h1>Court Booking</h1>
             
             <div style={{ marginTop: '15px', marginBottom: '20px' }}>
                 <label htmlFor="date-picker" style={{ fontWeight: 'bold', marginRight: '10px' }}>
@@ -176,13 +188,22 @@ export default function CourtBooking() {
                                     data-time-slot={timeSlot}
                                     data-start-time={getTimeString(timeSlot)}
                                     data-end-time={getTimeString(timeSlot + 1)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onClick={() => handleSlotClick(court)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            handleSlotClick(court)
+                                        }
+                                    }}
                                     style={{
                                         border: '1px solid #ddd',
                                         padding: '12px',
                                         textAlign: 'center',
                                         cursor: 'pointer',
                                         backgroundColor: '#ffffff',
-                                        transition: 'background-color 0.2s'
+                                        transition: 'background-color 0.2s',
+                                        userSelect: 'none'
                                     }}
                                     onMouseEnter={(e) => e.target.style.backgroundColor = '#e8f4f8'}
                                     onMouseLeave={(e) => e.target.style.backgroundColor = '#ffffff'}
