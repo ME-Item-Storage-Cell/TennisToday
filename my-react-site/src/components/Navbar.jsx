@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
 
 export default function Navbar() {
   const [session, setSession] = useState(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     async function loadSession() {
@@ -22,6 +23,13 @@ export default function Navbar() {
     }
   }, [])
 
+  const handleCourtBookingClick = (e) => {
+    if (!session) {
+      e.preventDefault()
+      navigate('/login')
+    }
+  }
+
   return (
     <nav style={{
       display: 'flex',
@@ -35,6 +43,13 @@ export default function Navbar() {
       <div>
         <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
           Home
+        </Link>
+        <Link 
+          to="/court-booking" 
+          onClick={handleCourtBookingClick}
+          style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
+        >
+          Court Booking
         </Link>
         {session ? (
           <Link to="/account" style={{ padding: '0.5rem 1rem', background: '#007bff', color: '#fff', borderRadius: '4px', textDecoration: 'none' }}>
