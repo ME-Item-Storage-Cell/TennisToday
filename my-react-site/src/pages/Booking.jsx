@@ -8,12 +8,6 @@ export default function Booking() {
   const booking = location.state
   const [equipmentBooking, setEquipmentBooking] = useState(false)
 
-const confirmBooking = () => {
-
-}
-
-
-
   useEffect(() => {
     if (!booking || !booking.court || !booking.date || !booking.startTime) {
       navigate('/court-booking', { replace: true })
@@ -55,13 +49,20 @@ const confirmBooking = () => {
             style={{ cursor: 'pointer' }}
           />
         </div>
-        <div style={{ marginTop: '16px' }}>
+        <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
           <button
             onClick={() => console.log('Booking confirmed')}
             style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
             aria-label="Confirm booking"
           >
             Confirm Booking
+          </button>
+          <button
+            onClick={() => navigate('/court-booking')}
+            style={{ padding: '10px 20px', backgroundColor: '#304153', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
+            aria-label="Return"
+            >
+              Return
           </button>
         </div>
       </div>
