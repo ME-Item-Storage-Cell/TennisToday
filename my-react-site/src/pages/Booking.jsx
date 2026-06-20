@@ -53,15 +53,16 @@ export default function Booking() {
     if (error) {
       if (error.code === '23505') {
         setError('This court is already booked for that time');
+
       } else {
         setError(error.message);
       }
+
       return false;
+
     } else {
-      setSuccess('Booking successful, check your email for your code.')
-      setTimeout(() => {
-        navigate('/court-booking', { replace: true });
-      }, 2000);
+      setSuccess(`Booking successful, your code is ${bookingCode}`)
+
       return true;
     }
   }
