@@ -23,13 +23,6 @@ export default function Navbar() {
     }
   }, [])
 
-  const handleCourtBookingClick = (e) => {
-    if (!session) {
-      e.preventDefault()
-      navigate('/login')
-    }
-  }
-
   return (
     <nav style={{
       display: 'flex',
@@ -45,9 +38,7 @@ export default function Navbar() {
           Home
         </Link>
         <Link 
-          to="/court-booking" 
-          onClick={handleCourtBookingClick}
-          style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
+          to="/court-booking" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
         >
           Court Booking
         </Link>

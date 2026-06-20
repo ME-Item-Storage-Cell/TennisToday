@@ -7,12 +7,21 @@ export default function Booking() {
   const navigate = useNavigate()
   const booking = location.state
   const [equipmentBooking, setEquipmentBooking] = useState(false)
+  const [error, setError] = useState('')
+  const [session, setSession] = useState(null)
+  const [success, setSuccess] = useState('')
 
   useEffect(() => {
     if (!booking || !booking.court || !booking.date || !booking.startTime) {
       navigate('/court-booking', { replace: true })
     }
   }, [booking, navigate])
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+  }, [])
 
   if (!booking || !booking.court || !booking.date || !booking.startTime) {
     return (
@@ -21,6 +30,40 @@ export default function Booking() {
         <p>Missing booking details. Redirecting to court booking...</p>
       </div>
     )
+  }
+
+  const getTimeStamp = (date, time) => {
+    return new Date(`${date}T${time}`).toISOString();
+  }
+
+  async function createBooking(courtNum, bookingTime, userID, bookingCode, boolEquipment) {
+    setError('');
+    const { data, error } = await supabase
+      .from("Venue1_Bookings")
+      .insert([
+        {
+          CourtNum: courtNum,
+          BookingTime: bookingTime,
+          Booker: userID,
+          BookingCode: bookingCode,
+          bookedEquipment: boolEquipment
+        }
+      ]);
+
+    if (error) {
+      if (error.code === '23505') {
+        setError('This court is already booked for that time');
+      } else {
+        setError(error.message);
+      }
+      return false;
+    } else {
+      setSuccess('Booking successful, check your email for your code.')
+      setTimeout(() => {
+        navigate('/court-booking', { replace: true });
+      }, 2000);
+      return true;
+    }
   }
 
   return (
@@ -49,9 +92,30 @@ export default function Booking() {
             style={{ cursor: 'pointer' }}
           />
         </div>
+        {error && (
+          <div style={{ marginTop: '12px', padding: '12px', backgroundColor: '#f8d7da', color: '#721c24', borderRadius: '4px', fontSize: '14px' }}>
+            {error}
+          </div>
+        )}
+        {success && (
+          <div style={{marginTop: '12px', padding:'12px', backgroundColor: '#90EE90', color: '	#013220', borderRadius: '4px', fontSize: '14px'}}>
+            {success}
+          </div>
+        )}
         <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
           <button
-            onClick={() => console.log('Booking confirmed')}
+            onClick={async () => {
+              if (!session) {
+                setError('Please log in first');
+                setTimeout(() => {
+                  navigate('/login');
+                }, 500);
+                return;
+              }
+              const bookingCode = Math.random().toString(36).substring(2, 11);
+              const bookingTime = getTimeStamp(booking.date, booking.startTime);
+              await createBooking(booking.court, bookingTime, session.user.id, bookingCode, equipmentBooking);
+            }}
             style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
             aria-label="Confirm booking"
           >
