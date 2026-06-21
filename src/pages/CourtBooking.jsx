@@ -97,7 +97,7 @@ export default function CourtBooking() {
     const handleWheel = useCallback((e) => {
         e.preventDefault()
         const minSlot = getMinTimeSlot()
-        
+
         if (e.deltaY > 0) {
             // Scroll down - move to later time
             setTimeSlot(prev => Math.min(prev + 1, TOTAL_SLOTS - 1))
@@ -106,6 +106,15 @@ export default function CourtBooking() {
             setTimeSlot(prev => Math.max(prev - 1, minSlot))
         }
     }, [TOTAL_SLOTS, selectedDate])
+
+    const handlePreviousSlot = () => {
+        const minSlot = getMinTimeSlot()
+        setTimeSlot(prev => Math.max(prev - 1, minSlot))
+    }
+
+    const handleNextSlot = () => {
+        setTimeSlot(prev => Math.min(prev + 1, TOTAL_SLOTS - 1))
+    }
     
     useEffect(() => {
         const table = tableRef.current
@@ -162,7 +171,38 @@ export default function CourtBooking() {
                 />
             </div>
             
-            <p>Current time slot: {getTimeRange(timeSlot)}</p>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
+                <p style={{ margin: 0 }}>Current time slot: {getTimeRange(timeSlot)}</p>
+                <button
+                    onClick={handlePreviousSlot}
+                    disabled={timeSlot === getMinTimeSlot()}
+                    style={{
+                        padding: '8px 16px',
+                        fontSize: '16px',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                        cursor: timeSlot === getMinTimeSlot() ? 'not-allowed' : 'pointer',
+                        backgroundColor: timeSlot === getMinTimeSlot() ? '#f0f0f0' : '#ffffff'
+                    }}
+                >
+                    ←
+                </button>
+                
+                <button
+                    onClick={handleNextSlot}
+                    disabled={timeSlot === TOTAL_SLOTS - 1}
+                    style={{
+                        padding: '8px 16px',
+                        fontSize: '16px',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                        cursor: timeSlot === TOTAL_SLOTS - 1 ? 'not-allowed' : 'pointer',
+                        backgroundColor: timeSlot === TOTAL_SLOTS - 1 ? '#f0f0f0' : '#ffffff'
+                    }}
+                >
+                    →
+                </button>
+            </div>
             
             <div
                 ref={tableRef}
