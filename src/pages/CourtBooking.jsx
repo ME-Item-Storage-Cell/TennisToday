@@ -76,13 +76,22 @@ export default function CourtBooking() {
     }
 
     const handleSlotClick = (court) => {
+        console.log('[CourtBooking] Slot clicked - court:', court, 'date:', selectedDate, 'timeSlot:', timeSlot)
         if (!session) {
+                console.log('[CourtBooking] No session, redirecting to login')
                 setError('Please log in first');
                 setTimeout(() => {
                   navigate('/login');
                 }, 500);
                 return;
             }
+        console.log('[CourtBooking] Navigating to booking with state:', {
+            court,
+            date: selectedDate,
+            startTime: getTimeString(timeSlot),
+            endTime: getTimeString(timeSlot + 1),
+            timeRange: getTimeRange(timeSlot),
+        })
         navigate('/booking', {
             state: {
                 court,
@@ -131,15 +140,18 @@ export default function CourtBooking() {
 
     useEffect(() => {
         const fetchBookings = async () => {
+            console.log('[CourtBooking] Fetching bookings for date:', selectedDate)
             const { data, error } = await supabase
                 .from("Venue1_Bookings")
                 .select("*")
 
             if (error) {
+                console.error('[CourtBooking] Fetch bookings error:', error)
                 setError(error)
                 return
             }
 
+            console.log('[CourtBooking] Bookings fetched:', data)
             setCurrentBookings(data)
         }
 
