@@ -19,6 +19,15 @@ export default function CourtBooking() {
     const START_HOUR = 6
     const END_HOUR = 19
     const TOTAL_SLOTS = (END_HOUR - START_HOUR) * 2
+    const [currentBookings, setCurrentBookings] = useState([])
+    const [error, setError] = useState('')
+    const [session, setSession] = useState(null)
+
+    useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setSession(session)
+        })
+    }, [])
     
     // Calculate the minimum valid time slot based on current date and time
     const getMinTimeSlot = () => {
@@ -67,6 +76,13 @@ export default function CourtBooking() {
     }
 
     const handleSlotClick = (court) => {
+        if (!session) {
+                setError('Please log in first');
+                setTimeout(() => {
+                  navigate('/login');
+                }, 500);
+                return;
+            }
         navigate('/booking', {
             state: {
                 court,
@@ -102,6 +118,24 @@ export default function CourtBooking() {
     // Reset timeSlot when date changes to ensure it's always valid
     useEffect(() => {
         setTimeSlot(getMinTimeSlot())
+    }, [selectedDate])
+
+    useEffect(() => {
+        const fetchBookings = async () => {
+            const { data, error } = await supabase
+                .from("Venue1_Bookings")
+                .select("*")
+
+            if (error) {
+                setError(error)
+                return
+            }
+
+            setCurrentBookings(data)
+        }
+
+        fetchBookings()
+
     }, [selectedDate])
 
     return (
@@ -208,7 +242,7 @@ export default function CourtBooking() {
                                     onMouseEnter={(e) => e.target.style.backgroundColor = '#e8f4f8'}
                                     onMouseLeave={(e) => e.target.style.backgroundColor = '#ffffff'}
                                 >
-                                    Court {court}
+                                    Book
                                 </td>
                             ))}
                         </tr>

@@ -19,7 +19,12 @@ export default function Login() {
     async function checkSession() {
       const { data, error } = await supabase.auth.getSession()
       if (error) {
-        setError(error.message)
+        if (error.message.includes("contain at least one character of each")) {
+          setError("Weak Password")
+        } else {
+          setError(error.message)
+        }
+        
       } else if (data.session) {
         navigate('/account', { replace: true })
       }
