@@ -5,6 +5,8 @@ import Login from './pages/login'
 import Account from './pages/Account'
 import CourtBooking from './pages/CourtBooking'
 import Booking from './pages/Booking'
+import MyBookings from './pages/MyBookings'
+import TennisCourtDoorSimulator from './pages/TennisCourtDoorSimulator'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <Route path="/account" element={<Account />} />
         <Route path="/court-booking" element={<CourtBooking />} />
         <Route path="/booking" element={<Booking />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
+        <Route path="/tennis-court-door-simulation" element={<TennisCourtDoorSimulator />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </BrowserRouter>

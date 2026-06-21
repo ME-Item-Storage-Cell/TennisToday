@@ -37,6 +37,10 @@ export default function Navbar() {
         <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
           Home
         </Link>
+        <Link to="/my-bookings" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
+        >
+          My Bookings
+        </Link>
         <Link 
           to="/court-booking" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
         >

@@ -64,7 +64,12 @@ export default function Login() {
     })
 
     if (error) {
-      setError(error.message)
+      if (error.code === "weak_password") {
+        setError("Password too weak, should contain at least 1 letter (lowercase and capital), 1 number, and 1 symbol. Must be at least 6 characters long.")
+      } else {
+        setError(error.message)
+      }
+      
     } else {
       setMessage('Check your email for confirmation')
     }
