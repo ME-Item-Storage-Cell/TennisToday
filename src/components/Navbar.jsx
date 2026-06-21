@@ -32,11 +32,11 @@ export default function Navbar() {
       background: '#f2f2f2',
       borderBottom: '1px solid #ddd',
     }}>
-      <div style={{ fontWeight: 700 }}>TennisToday</div>
-      <div>
+      <div> 
         <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
-          Home
-        </Link>
+          TennisToday
+        </Link></div>
+      <div>
         <Link to="/my-bookings" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
         >
           My Bookings

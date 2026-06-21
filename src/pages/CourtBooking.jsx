@@ -10,7 +10,16 @@ export default function CourtBooking() {
     // Get today's date in YYYY-MM-DD format
     const getTodayString = () => {
         const today = new Date()
+        today.setDate(today.getDate() + 1)
+        console.log(today)
         return today.toISOString().split('T')[0]
+    }
+
+    const getTomorrowString = () => {
+        const tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 2)
+        console.log(tomorrow)
+        return tomorrow.toISOString().split('T')[0]
     }
     
     const [selectedDate, setSelectedDate] = useState(getTodayString())
@@ -29,6 +38,15 @@ export default function CourtBooking() {
         })
     }, [])
     
+    const dayEndCheck = () => {
+        const now = new Date()
+        if (now.getHours >= 18 && now.getMinutes >= 30) {
+            return true
+        } else {
+            return false
+        }
+    }
+
     // Calculate the minimum valid time slot based on current date and time
     const getMinTimeSlot = () => {
         if (selectedDate !== getTodayString()) {
@@ -41,7 +59,8 @@ export default function CourtBooking() {
         const currentHours = now.getHours()
         const currentMinutes = now.getMinutes()
         const currentTotalMinutes = currentHours * 60 + currentMinutes
-        
+    
+
         // Calculate which slot we're currently in
         const startTotalMinutes = START_HOUR * 60
         const minutesSinceStart = currentTotalMinutes - startTotalMinutes
@@ -55,7 +74,7 @@ export default function CourtBooking() {
         const currentSlot = minutesSinceStart / 30
         const minSlot = Math.ceil(currentSlot)
         
-        // Return the minimum slot, capped at TOTAL_SLOTS - 1
+        // Return the minimum slot, capped at the final slot
         return Math.min(minSlot, TOTAL_SLOTS - 1)
     }
     
@@ -172,7 +191,7 @@ export default function CourtBooking() {
                     type="date"
                     value={selectedDate}
                     onChange={(e) => setSelectedDate(e.target.value)}
-                    min={getTodayString()}
+                    min={dayEndCheck() ? getTomorrowString() : getTodayString()}
                     style={{
                         padding: '8px 12px',
                         fontSize: '16px',

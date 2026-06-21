@@ -57,11 +57,13 @@ export default function MyBookings() {
                     .select('*')
                     .eq('Booker', session.user.id)
                     .gt('BookingTime', getTodayString())
+                    .order('BookingTime', {ascending: true})
                 : supabase
                     .from('Venue1_Bookings')
                     .select('*')
                     .eq('Booker', session.user.id)
                     .lt('BookingTime', getTodayString())
+                    .order('BookingTime', {ascending: false})
 
             );
 
