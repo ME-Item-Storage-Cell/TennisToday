@@ -35,8 +35,13 @@ export default function Navbar() {
       <div> 
         <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
           TennisToday
-        </Link></div>
+        </Link>
+        </div>
       <div>
+        <Link to="/tennis-court-door-simulation" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
+        >
+          Tennis Court
+        </Link>
         <Link to="/my-bookings" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
         >
           My Bookings

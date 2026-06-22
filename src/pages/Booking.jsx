@@ -68,9 +68,9 @@ export default function Booking() {
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '20px', alignItems: 'center' }}>
       <h1>Booking</h1>
-      <div style={{ marginTop: '20px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', maxWidth: '500px' }}>
+      <div style={{ marginTop: '20px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', maxWidth: '500px', justifyContent: 'center', alignItems: 'center'}}>
         <p style={{ margin: '0 0 12px', fontSize: '18px', fontWeight: 'bold' }}>Your selected booking:</p>
         <div style={{ marginBottom: '8px' }}>
           <span style={{ fontWeight: '600' }}>Court:</span> Court {booking.court}

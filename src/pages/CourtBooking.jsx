@@ -10,14 +10,14 @@ export default function CourtBooking() {
     // Get today's date in YYYY-MM-DD format
     const getTodayString = () => {
         const today = new Date()
-        today.setDate(today.getDate() + 1)
+        //today.setDate(today.getDate() + 1)
         console.log(today)
         return today.toISOString().split('T')[0]
     }
 
     const getTomorrowString = () => {
         const tomorrow = new Date()
-        tomorrow.setDate(tomorrow.getDate() + 2)
+        tomorrow.setDate(tomorrow.getDate() + 1)
         console.log(tomorrow)
         return tomorrow.toISOString().split('T')[0]
     }
