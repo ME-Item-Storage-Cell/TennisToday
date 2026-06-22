@@ -117,14 +117,14 @@ export default function Login() {
         <>
           <input
             type="text"
-            placeholder="Display Name"
+            placeholder="Display Name (Optional)"
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
           />
 
           <input
             type="tel"
-            placeholder="Phone Number"
+            placeholder="Phone Number (Optional)"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
           />
