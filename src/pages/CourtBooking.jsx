@@ -10,19 +10,45 @@ export default function CourtBooking() {
     // Get today's date in YYYY-MM-DD format
     const getTodayString = () => {
         const today = new Date()
-        //today.setDate(today.getDate() + 1)
-        console.log(today)
+        //console.log(today)
         return today.toISOString().split('T')[0]
     }
 
     const getTomorrowString = () => {
         const tomorrow = new Date()
         tomorrow.setDate(tomorrow.getDate() + 1)
-        console.log(tomorrow)
+        //console.log(tomorrow)
         return tomorrow.toISOString().split('T')[0]
     }
+
+    const getTodayDate = () => {
+        const today = new Date()
+        today.setHours(today.getHours + 10)
+        //console.log(today)
+        return today.toISOString().split('T')[0]
+    }
+
+    const getTomorrowDate = () => {
+        const tomorrow = new Date()
+        tomorrow.setDate(tomorrow.getDate() + 1)
+        tomorrow.setHours(tomorrow.getHours + 10)
+        //console.log(tomorrow)
+        return tomorrow.toISOString().split('T')[0]
+    }
+
+    const dayEndCheck = () => {
+        const now = new Date()
+        console.log(now.getHours(), now.getMinutes())
+        if (now.getHours() >= 18 && now.getMinutes() >= 30 || now.getHours() >= 19 ) {
+            console.log(true)
+            return true
+        } else {
+            console.log(false)
+            return false
+        }
+    }
     
-    const [selectedDate, setSelectedDate] = useState(getTodayString())
+    const [selectedDate, setSelectedDate] = useState(dayEndCheck() ? getTomorrowString() : getTodayString())
     
     const COURTS = [1, 2, 3, 4, 5]
     const START_HOUR = 6
@@ -38,14 +64,7 @@ export default function CourtBooking() {
         })
     }, [])
     
-    const dayEndCheck = () => {
-        const now = new Date()
-        if (now.getHours >= 18 && now.getMinutes >= 30) {
-            return true
-        } else {
-            return false
-        }
-    }
+    
 
     // Calculate the minimum valid time slot based on current date and time
     const getMinTimeSlot = () => {

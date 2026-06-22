@@ -113,7 +113,7 @@ export default function Booking() {
                 }, 500);
                 return;
               }
-              const bookingCode = Math.random().toString(36).substring(2, 11);
+              const bookingCode =Math.floor(Math.random() * 90000) + 10000
               const bookingTime = getTimeStamp(booking.date, booking.startTime);
               await createBooking(booking.court, bookingTime, session.user.id, bookingCode, equipmentBooking);
             }}
