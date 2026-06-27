@@ -34,7 +34,7 @@ export default function Navbar() {
       borderBottom: '1px solid #ddd',
     }}>
       <div> 
-        <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
+        <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', fontWeight: 'bolder'}}>
           TennisToday
         </Link>
       </div>

@@ -43,7 +43,7 @@ export default function Account() {
     <main style={{ padding: '2rem' }}>
       <div className='accountContainer'>
         <div className='accountBox'>
-        <h1 className='pageHeading'>Account</h1>
+        <h1 className='pageHeading'>Your Account</h1>
 
         {loading && <p>Loading user details…</p>}
 
@@ -55,7 +55,7 @@ export default function Account() {
         )}
 
         {!loading && session && (
-          <div style={{ maxWidth: 520, padding: '1.5rem', border: '1px solid #ddd', borderRadius: 10, background: '#fafafa' }}>
+          <div style={{ padding: '1.5rem', border: '1px solid #ddd', borderRadius: 10, background: '#fafafa' }}>
             <div style={{ marginBottom: '0.75rem' }}>
               <strong>Display name:</strong>
               <div>{displayName}</div>

@@ -16,13 +16,10 @@ export default function MyBookings() {
 
     useEffect(() => {
     async function loadSession() {
-      console.log('[MyBookings] Loading session...')
       const { data, error } = await supabase.auth.getSession()
       if (error) {
-        console.error('[MyBookings] Session load error:', error)
         setError(error.message)
       } else {
-        console.log('[MyBookings] Session loaded:', data.session)
         setSession(data.session)
       }
       setLoading(false)
@@ -31,7 +28,6 @@ export default function MyBookings() {
     loadSession()
 
     const { data: authListener } = supabase.auth.onAuthStateChange((_, currentSession) => {
-      console.log('[MyBookings] Auth state changed:', currentSession)
       setSession(currentSession)
     })
 
@@ -49,7 +45,6 @@ export default function MyBookings() {
 
     useEffect(() => {
         const fetchUserBookings = async () => {
-            console.log('[MyBookings] Fetching bookings - current:', current, 'session:', session)
             const { data, error } = await (
             current
                 ? supabase
@@ -68,12 +63,10 @@ export default function MyBookings() {
             );
 
             if (error) {
-                console.error('[MyBookings] Fetch bookings error:', error)
                 setError(error.message)
                 return
             }
 
-            console.log('[MyBookings] Bookings fetched:', data)
             setUserBookings(data)
         }
 
@@ -103,7 +96,6 @@ export default function MyBookings() {
                 <div style={{ marginTop: '20px', marginBottom: '20px' }}>
                     <button
                         onClick={() => {
-                            console.log('[MyBookings] Toggle button clicked - current was:', current)
                             setCurrent(!current)
                         }}
                         style={{

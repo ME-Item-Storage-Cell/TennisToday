@@ -12,18 +12,14 @@ export default function TennisCourtDoorSimulator() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        console.log("Court choice:" + courtChoice)
     }, [courtChoice])
 
     useEffect(() => {
     async function loadSession() {
-      console.log('[MyBookings] Loading session...')
       const { data, error } = await supabase.auth.getSession()
       if (error) {
-        console.error('[MyBookings] Session load error:', error)
         setError(error.message)
       } else {
-        console.log('[MyBookings] Session loaded:', data.session)
         setSession(data.session)
       }
       setLoading(false)
@@ -32,7 +28,6 @@ export default function TennisCourtDoorSimulator() {
     loadSession()
 
     const { data: authListener } = supabase.auth.onAuthStateChange((_, currentSession) => {
-      console.log('[MyBookings] Auth state changed:', currentSession)
       setSession(currentSession)
     })
 
@@ -47,7 +42,6 @@ export default function TennisCourtDoorSimulator() {
         now.setMinutes(minutes - (minutes % 30))
         now.setSeconds(0)
         now.setMilliseconds(0)
-        console.log(now)
         return now.toISOString()
     }
 
@@ -66,25 +60,26 @@ export default function TennisCourtDoorSimulator() {
         }
 
         if (data.length > 0) {
-            console.log(data)
             setDoorOpen('Open')
-            console.log(doorOpen)
 
         } else {
             setDoorOpen('Closed')
-            console.log(doorOpen)
         }
     }
 
     return (
-        <div style={{ padding: '20px', alignItems: 'center' }}>
-            <h1>Tennis Court</h1>
-            <div> 
+        <div className='loginContainer'>
+            <div className='loginBox'>
+            <h1 className='pageHeading'>Tennis Court Pin-pad</h1>
+            <p style={{margin: '0'}}>Select a court:</p>
+            
+            <div style={{ display: 'flex', gap: '10px', padding: '5px 0px' }}>
+                
                 <button
                     onClick={() => {
                         setCourtChoice(1)
                     }}
-                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
+                    style={{ padding: '6px 12px', backgroundColor: courtChoice === 1 ? '#007bff' : '#e0e0e0', color: courtChoice === 1 ? 'white' : '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', transition: 'background-color 0.2s, color 0.2s' }}
                     aria-label="Select Court 1"
                 >
                     Court 1
@@ -93,8 +88,8 @@ export default function TennisCourtDoorSimulator() {
                     onClick={() => {
                         setCourtChoice(2)
                     }}
-                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
-                    aria-label="Select Court 1"
+                    style={{ padding: '6px 12px', backgroundColor: courtChoice === 2 ? '#007bff' : '#e0e0e0', color: courtChoice === 2 ? 'white' : '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', transition: 'background-color 0.2s, color 0.2s' }}
+                    aria-label="Select Court 2"
                 >
                     Court 2
                 </button>
@@ -102,8 +97,8 @@ export default function TennisCourtDoorSimulator() {
                     onClick={() => {
                         setCourtChoice(3)
                     }}
-                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
-                    aria-label="Select Court 1"
+                    style={{ padding: '6px 12px', backgroundColor: courtChoice === 3 ? '#007bff' : '#e0e0e0', color: courtChoice === 3 ? 'white' : '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', transition: 'background-color 0.2s, color 0.2s' }}
+                    aria-label="Select Court 3"
                 >
                     Court 3
                 </button>
@@ -111,8 +106,8 @@ export default function TennisCourtDoorSimulator() {
                     onClick={() => {
                         setCourtChoice(4)
                     }}
-                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
-                    aria-label="Select Court 1"
+                    style={{ padding: '6px 12px', backgroundColor: courtChoice === 4 ? '#007bff' : '#e0e0e0', color: courtChoice === 4 ? 'white' : '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', transition: 'background-color 0.2s, color 0.2s' }}
+                    aria-label="Select Court 4"
                 >
                     Court 4
                 </button>
@@ -120,13 +115,13 @@ export default function TennisCourtDoorSimulator() {
                     onClick={() => {
                         setCourtChoice(5)
                     }}
-                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
-                    aria-label="Select Court 1"
+                    style={{ padding: '6px 12px', backgroundColor: courtChoice === 5 ? '#007bff' : '#e0e0e0', color: courtChoice === 5 ? 'white' : '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', transition: 'background-color 0.2s, color 0.2s' }}
+                    aria-label="Select Court 5"
                 >
                     Court 5
                 </button>
             </div>
-            <div>
+            <div style={{ display: 'flex', gap: '10px', padding: '5px 0px' }}>
                 <input
                     type="text"
                     placeholder="Enter booking code"
@@ -137,14 +132,15 @@ export default function TennisCourtDoorSimulator() {
                     onClick={() => {
                         attemptEntry(bookingCode)
                     }}
-                    style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
+                    style={{ padding: '2px 12px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px' }}
                     aria-label="Select Court 1"
                 >
                     Enter
                 </button>
             </div>
-            <div>
-                {doorOpen}
+            <div style={{ display: 'flex', gap: '5px', padding: '20px 0px' }}>
+                Door is: <span style={{ color: doorOpen === 'Open' ? 'green' : 'red'}}>{doorOpen}</span>
+            </div>
             </div>
         </div>
     )

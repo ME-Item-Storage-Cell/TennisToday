@@ -11,21 +11,18 @@ export default function CourtBooking() {
     // Get today's date in YYYY-MM-DD format
     const getTodayString = () => {
         const today = new Date()
-        //console.log(today)
         return today.toISOString().split('T')[0]
     }
 
     const getTomorrowString = () => {
         const tomorrow = new Date()
         tomorrow.setDate(tomorrow.getDate() + 1)
-        //console.log(tomorrow)
         return tomorrow.toISOString().split('T')[0]
     }
 
     const getTodayDate = () => {
         const today = new Date()
         today.setHours(today.getHours + 10)
-        //console.log(today)
         return today.toISOString().split('T')[0]
     }
 
@@ -33,18 +30,14 @@ export default function CourtBooking() {
         const tomorrow = new Date()
         tomorrow.setDate(tomorrow.getDate() + 1)
         tomorrow.setHours(tomorrow.getHours + 10)
-        //console.log(tomorrow)
         return tomorrow.toISOString().split('T')[0]
     }
 
     const dayEndCheck = () => {
         const now = new Date()
-        console.log(now.getHours(), now.getMinutes())
         if (now.getHours() >= 18 && now.getMinutes() >= 30 || now.getHours() >= 19 ) {
-            console.log(true)
             return true
         } else {
-            console.log(false)
             return false
         }
     }
@@ -115,22 +108,13 @@ export default function CourtBooking() {
     }
 
     const handleSlotClick = (court) => {
-        console.log('[CourtBooking] Slot clicked - court:', court, 'date:', selectedDate, 'timeSlot:', timeSlot)
         if (!session) {
-                console.log('[CourtBooking] No session, redirecting to login')
                 setError('Please log in first');
                 setTimeout(() => {
                   navigate('/login');
                 }, 500);
                 return;
             }
-        console.log('[CourtBooking] Navigating to booking with state:', {
-            court,
-            date: selectedDate,
-            startTime: getTimeString(timeSlot),
-            endTime: getTimeString(timeSlot + 1),
-            timeRange: getTimeRange(timeSlot),
-        })
         navigate('/booking', {
             state: {
                 court,
@@ -179,18 +163,15 @@ export default function CourtBooking() {
 
     useEffect(() => {
         const fetchBookings = async () => {
-            console.log('[CourtBooking] Fetching bookings for date:', selectedDate)
             const { data, error } = await supabase
                 .from("Venue1_Bookings")
                 .select("*")
 
             if (error) {
-                console.error('[CourtBooking] Fetch bookings error:', error)
                 setError(error)
                 return
             }
 
-            console.log('[CourtBooking] Bookings fetched:', data)
             setCurrentBookings(data)
         }
 
@@ -201,7 +182,7 @@ export default function CourtBooking() {
     return (
         <div className='pageContainer'>
             <div className='pageBox'>
-                <h1 className='pageHeading'>Court Booking</h1>
+                <h1 className='pageHeading'>Book a Court</h1>
                 
                 <div style={{ marginTop: '15px', marginBottom: '20px' }}>
                     <label htmlFor="date-picker" style={{ fontWeight: 'bold', marginRight: '10px' }}>
