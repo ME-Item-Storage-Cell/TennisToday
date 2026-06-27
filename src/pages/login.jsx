@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
+import './PageStyling.css'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -12,6 +13,10 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+
+  useEffect(() => {
+    setError('')
+  }, [isSigningUp])
 
   useEffect(() => {
     let isMounted = true
@@ -96,63 +101,65 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className='loginContainer'>
+      <div className='loginBox'>
+        {isSigningUp ? <h1>Sign Up</h1> : <h1>Login</h1> }
 
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      {isSigningUp && (
-        <>
-          <input
-            type="text"
-            placeholder="Display Name (Optional)"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-          />
+        {isSigningUp && (
+          <>
+            <input
+              type="text"
+              placeholder="Display Name (Optional)"
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+            />
 
-          <input
-            type="tel"
-            placeholder="Phone Number (Optional)"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </>
-      )}
+            <input
+              type="tel"
+              placeholder="Phone Number (Optional)"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </>
+        )}
 
-      {message && <p style={{ color: 'green' }}>{message}</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        {message && <p style={{ color: 'green' }}>{message}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
 
-      {isSigningUp ? (
-        <>
-          <button type="button" onClick={signUp} disabled={loading}>
-            Create account
-          </button>
-          <button type="button" onClick={() => setIsSigningUp(false)} disabled={loading}>
-            Switch to Sign In
-          </button>
-        </>
-      ) : (
-        <>
-          <button type="button" onClick={signIn} disabled={loading}>
-            Sign In
-          </button>
-          <button type="button" onClick={() => setIsSigningUp(true)} disabled={loading}>
-            Switch to Sign Up
-          </button>
-        </>
-      )}
+        {isSigningUp ? (
+          <>
+            <button type="button" onClick={signUp} disabled={loading}>
+              Create account
+            </button>
+            <button type="button" onClick={() => setIsSigningUp(false)} disabled={loading}>
+              Switch to Log in
+            </button>
+          </>
+        ) : (
+          <>
+            <button type="button" onClick={signIn} disabled={loading}>
+              Log in
+            </button>
+            <button type="button" onClick={() => setIsSigningUp(true)} disabled={loading}>
+              Switch to Sign Up
+            </button>
+          </>
+        )}
+      </div>
     </div>
   )
 }

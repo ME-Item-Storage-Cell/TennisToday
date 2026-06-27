@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
+import './PageStyling.css'
 
 export default function CourtBooking() {
     const navigate = useNavigate()
@@ -198,151 +199,153 @@ export default function CourtBooking() {
     }, [selectedDate])
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h1>Court Booking</h1>
-            
-            <div style={{ marginTop: '15px', marginBottom: '20px' }}>
-                <label htmlFor="date-picker" style={{ fontWeight: 'bold', marginRight: '10px' }}>
-                    Select Date:
-                </label>
-                <input
-                    id="date-picker"
-                    type="date"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    min={dayEndCheck() ? getTomorrowString() : getTodayString()}
-                    style={{
-                        padding: '8px 12px',
-                        fontSize: '16px',
-                        border: '1px solid #ccc',
-                        borderRadius: '4px',
-                        cursor: 'pointer'
-                    }}
-                />
-            </div>
-            
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                <p style={{ margin: 0 }}>Current time slot: {getTimeRange(timeSlot)}</p>
-                <button
-                    onClick={handlePreviousSlot}
-                    disabled={timeSlot === getMinTimeSlot()}
-                    style={{
-                        padding: '8px 16px',
-                        fontSize: '16px',
-                        border: '1px solid #ccc',
-                        borderRadius: '4px',
-                        cursor: timeSlot === getMinTimeSlot() ? 'not-allowed' : 'pointer',
-                        backgroundColor: timeSlot === getMinTimeSlot() ? '#f0f0f0' : '#ffffff'
-                    }}
-                >
-                    ←
-                </button>
+        <div className='pageContainer'>
+            <div className='pageBox'>
+                <h1 className='pageHeading'>Court Booking</h1>
                 
-                <button
-                    onClick={handleNextSlot}
-                    disabled={timeSlot === TOTAL_SLOTS - 1}
+                <div style={{ marginTop: '15px', marginBottom: '20px' }}>
+                    <label htmlFor="date-picker" style={{ fontWeight: 'bold', marginRight: '10px' }}>
+                        Select Date:
+                    </label>
+                    <input
+                        id="date-picker"
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        min={dayEndCheck() ? getTomorrowString() : getTodayString()}
+                        style={{
+                            padding: '8px 12px',
+                            fontSize: '16px',
+                            border: '1px solid #ccc',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                        }}
+                    />
+                </div>
+                
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
+                    <p style={{ margin: 0, fontWeight: 'bold', marginRight: '10px' }}>Change time slot:</p>
+                    <button
+                        onClick={handlePreviousSlot}
+                        disabled={timeSlot === getMinTimeSlot()}
+                        style={{
+                            padding: '8px 16px',
+                            fontSize: '16px',
+                            border: '1px solid #ccc',
+                            borderRadius: '4px',
+                            cursor: timeSlot === getMinTimeSlot() ? 'not-allowed' : 'pointer',
+                            backgroundColor: timeSlot === getMinTimeSlot() ? '#f0f0f0' : '#ffffff'
+                        }}
+                    >
+                        ←
+                    </button>
+                    
+                    <button
+                        onClick={handleNextSlot}
+                        disabled={timeSlot === TOTAL_SLOTS - 1}
+                        style={{
+                            padding: '8px 16px',
+                            fontSize: '16px',
+                            border: '1px solid #ccc',
+                            borderRadius: '4px',
+                            cursor: timeSlot === TOTAL_SLOTS - 1 ? 'not-allowed' : 'pointer',
+                            backgroundColor: timeSlot === TOTAL_SLOTS - 1 ? '#f0f0f0' : '#ffffff'
+                        }}
+                    >
+                        →
+                    </button>
+                </div>
+                
+                <div
+                    ref={tableRef}
                     style={{
-                        padding: '8px 16px',
-                        fontSize: '16px',
+                        overflowX: 'auto',
                         border: '1px solid #ccc',
-                        borderRadius: '4px',
-                        cursor: timeSlot === TOTAL_SLOTS - 1 ? 'not-allowed' : 'pointer',
-                        backgroundColor: timeSlot === TOTAL_SLOTS - 1 ? '#f0f0f0' : '#ffffff'
+                        borderRadius: '8px',
+                        marginTop: '20px'
                     }}
                 >
-                    →
-                </button>
-            </div>
-            
-            <div
-                ref={tableRef}
-                style={{
-                    overflowX: 'auto',
-                    border: '1px solid #ccc',
-                    borderRadius: '8px',
-                    marginTop: '20px'
-                }}
-            >
-                <table style={{
-                    width: '100%',
-                    borderCollapse: 'collapse',
-                    minWidth: '500px'
-                }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#f5f5f5' }}>
-                            <th style={{
-                                border: '1px solid #ddd',
-                                padding: '12px',
-                                fontWeight: 'bold',
-                                textAlign: 'center'
-                            }}>
-                                Time
-                            </th>
-                            {COURTS.map(court => (
-                                <th
-                                    key={court}
-                                    style={{
-                                        border: '1px solid #ddd',
-                                        padding: '12px',
-                                        fontWeight: 'bold',
-                                        textAlign: 'center',
-                                        backgroundColor: '#e8f4f8'
-                                    }}
-                                >
-                                    Court {court}
+                    <table style={{
+                        width: '100%',
+                        borderCollapse: 'collapse',
+                        minWidth: '500px'
+                    }}>
+                        <thead>
+                            <tr style={{ backgroundColor: '#f5f5f5' }}>
+                                <th style={{
+                                    border: '1px solid #ddd',
+                                    padding: '12px',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center'
+                                }}>
+                                    Selected Slot
                                 </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style={{
-                                border: '1px solid #ddd',
-                                padding: '12px',
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                                backgroundColor: '#f9f9f9'
-                            }}>
-                                {getTimeRange(timeSlot)}
-                            </td>
-                            {COURTS.map(court => (
-                                <td
-                                    key={`${timeSlot}-${court}`}
-                                    data-court={court}
-                                    data-time-slot={timeSlot}
-                                    data-start-time={getTimeString(timeSlot)}
-                                    data-end-time={getTimeString(timeSlot + 1)}
-                                    role="button"
-                                    tabIndex={0}
-                                    onClick={() => handleSlotClick(court)}
-                                    onKeyDown={(e) => {
-                                        if (e.key === 'Enter' || e.key === ' ') {
-                                            handleSlotClick(court)
-                                        }
-                                    }}
-                                    style={{
-                                        border: '1px solid #ddd',
-                                        padding: '12px',
-                                        textAlign: 'center',
-                                        cursor: 'pointer',
-                                        backgroundColor: '#ffffff',
-                                        transition: 'background-color 0.2s',
-                                        userSelect: 'none'
-                                    }}
-                                    onMouseEnter={(e) => e.target.style.backgroundColor = '#e8f4f8'}
-                                    onMouseLeave={(e) => e.target.style.backgroundColor = '#ffffff'}
-                                >
-                                    Book
+                                {COURTS.map(court => (
+                                    <th
+                                        key={court}
+                                        style={{
+                                            border: '1px solid #ddd',
+                                            padding: '12px',
+                                            fontWeight: 'bold',
+                                            textAlign: 'center',
+                                            backgroundColor: '#e8f4f8'
+                                        }}
+                                    >
+                                        Court {court}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style={{
+                                    border: '1px solid #ddd',
+                                    padding: '12px',
+                                    fontWeight: 'bold',
+                                    textAlign: 'center',
+                                    backgroundColor: '#f9f9f9'
+                                }}>
+                                    {getTimeRange(timeSlot)}
                                 </td>
-                            ))}
-                        </tr>
-                    </tbody>
-                </table>
+                                {COURTS.map(court => (
+                                    <td
+                                        key={`${timeSlot}-${court}`}
+                                        data-court={court}
+                                        data-time-slot={timeSlot}
+                                        data-start-time={getTimeString(timeSlot)}
+                                        data-end-time={getTimeString(timeSlot + 1)}
+                                        role="button"
+                                        tabIndex={0}
+                                        onClick={() => handleSlotClick(court)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === 'Enter' || e.key === ' ') {
+                                                handleSlotClick(court)
+                                            }
+                                        }}
+                                        style={{
+                                            border: '1px solid #ddd',
+                                            padding: '12px',
+                                            textAlign: 'center',
+                                            cursor: 'pointer',
+                                            backgroundColor: '#ffffff',
+                                            transition: 'background-color 0.2s',
+                                            userSelect: 'none'
+                                        }}
+                                        onMouseEnter={(e) => e.target.style.backgroundColor = '#e8f4f8'}
+                                        onMouseLeave={(e) => e.target.style.backgroundColor = '#ffffff'}
+                                    >
+                                        Book
+                                    </td>
+                                ))}
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p style={{ marginTop: '20px', fontSize: '14px', color: '#666'}}>
+                    You can use the scroll wheel to navigate through time slots (6:00 AM - 7:00 PM)
+                </p>
             </div>
-            
-            <p style={{ marginTop: '20px', fontSize: '14px', color: '#666' }}>
-                Use scroll wheel to navigate through time slots (6:00 AM - 7:00 PM)
-            </p>
         </div>
     )
 }

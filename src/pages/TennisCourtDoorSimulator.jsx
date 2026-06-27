@@ -65,11 +65,14 @@ export default function TennisCourtDoorSimulator() {
             return
         }
 
-        if (data) {
+        if (data.length > 0) {
+            console.log(data)
             setDoorOpen('Open')
-            setTimeout(() => {
-                  setDoorOpen('Closed');
-                }, 10000);
+            console.log(doorOpen)
+
+        } else {
+            setDoorOpen('Closed')
+            console.log(doorOpen)
         }
     }
 
@@ -139,6 +142,9 @@ export default function TennisCourtDoorSimulator() {
                 >
                     Enter
                 </button>
+            </div>
+            <div>
+                {doorOpen}
             </div>
         </div>
     )

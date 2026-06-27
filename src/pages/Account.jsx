@@ -41,56 +41,60 @@ export default function Account() {
 
   return (
     <main style={{ padding: '2rem' }}>
-      <h1>Account</h1>
+      <div className='accountContainer'>
+        <div className='accountBox'>
+        <h1 className='pageHeading'>Account</h1>
 
-      {loading && <p>Loading user details…</p>}
+        {loading && <p>Loading user details…</p>}
 
-      {!loading && !session && (
-        <div>
-          <p>You are not signed in.</p>
-          <Link to="/login">Go to login</Link>
+        {!loading && !session && (
+          <div>
+            <p>You are not signed in.</p>
+            <Link to="/login">Go to login</Link>
+          </div>
+        )}
+
+        {!loading && session && (
+          <div style={{ maxWidth: 520, padding: '1.5rem', border: '1px solid #ddd', borderRadius: 10, background: '#fafafa' }}>
+            <div style={{ marginBottom: '0.75rem' }}>
+              <strong>Display name:</strong>
+              <div>{displayName}</div>
+            </div>
+
+            <div style={{ marginBottom: '0.75rem' }}>
+              <strong>Email:</strong>
+              <div>{session.user.email}</div>
+            </div>
+
+            <div style={{ marginBottom: '0.75rem' }}>
+              <strong>Phone:</strong>
+              <div>{phone}</div>
+            </div>
+
+            {error && <p style={{ color: 'red' }}>{error}</p>}
+
+            <button
+              type="button"
+              onClick={async () => {
+                setLoading(true)
+                setError('')
+                const { error } = await supabase.auth.signOut()
+                if (error) {
+                  setError(error.message)
+                  setLoading(false)
+                } else {
+                  navigate('/login', { replace: true })
+                }
+              }}
+              disabled={loading}
+              style={{ marginTop: '1rem' }}
+            >
+              Sign out
+            </button>
+          </div>
+        )}
         </div>
-      )}
-
-      {!loading && session && (
-        <div style={{ maxWidth: 520, padding: '1.5rem', border: '1px solid #ddd', borderRadius: 10, background: '#fafafa' }}>
-          <div style={{ marginBottom: '0.75rem' }}>
-            <strong>Display name:</strong>
-            <div>{displayName}</div>
-          </div>
-
-          <div style={{ marginBottom: '0.75rem' }}>
-            <strong>Email:</strong>
-            <div>{session.user.email}</div>
-          </div>
-
-          <div style={{ marginBottom: '0.75rem' }}>
-            <strong>Phone:</strong>
-            <div>{phone}</div>
-          </div>
-
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-
-          <button
-            type="button"
-            onClick={async () => {
-              setLoading(true)
-              setError('')
-              const { error } = await supabase.auth.signOut()
-              if (error) {
-                setError(error.message)
-                setLoading(false)
-              } else {
-                navigate('/login', { replace: true })
-              }
-            }}
-            disabled={loading}
-            style={{ marginTop: '1rem' }}
-          >
-            Sign out
-          </button>
-        </div>
-      )}
+      </div>
     </main>
   )
 }

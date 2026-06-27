@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../supabase'
+import './ComponentStyling.css' 
 
 export default function Navbar() {
   const [session, setSession] = useState(null)
@@ -29,18 +30,18 @@ export default function Navbar() {
       justifyContent: 'space-between',
       alignItems: 'center',
       padding: '1rem',
-      background: '#f2f2f2',
+      background: '#ffffff',
       borderBottom: '1px solid #ddd',
     }}>
       <div> 
         <Link to="/" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333' }}>
           TennisToday
         </Link>
-        </div>
-      <div>
+      </div>
+      <div className='navLinks'>
         <Link to="/tennis-court-door-simulation" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
         >
-          Tennis Court
+          Tennis Court Door
         </Link>
         <Link to="/my-bookings" style={{ marginRight: '1rem', textDecoration: 'none', color: '#333', cursor: 'pointer' }}
         >

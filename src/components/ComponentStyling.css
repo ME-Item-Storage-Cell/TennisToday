@@ -1,0 +1,11 @@
+.navLinks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 5px 10px;
+}
+
+.navLinks a {
+  white-space: nowrap;
+}

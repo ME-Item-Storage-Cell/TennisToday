@@ -1,0 +1,82 @@
+.main{
+    padding: 0 12.5%;
+}
+
+ /* Some default containers*/
+.pageContainer {
+    padding: 30px;
+}
+
+.pageBox {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.pageHeading {
+    font-family: 'Monaco', monospace, monospace;
+}
+
+.homeHeadingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 100px;
+    margin-top: 100px;
+    background: #1E8FD5;
+    width: 100%;
+    height: 100%;
+}
+
+/* Home page exclusive */
+.homeTitleText {
+    color: white;
+    font-family: 'Monaco', monospace, monospace;
+}
+
+.homeDescContainer{
+    display: flex;
+    gap: 15px;
+    
+}
+
+/* Login page exclusive */
+.loginContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 10vh;
+    font-family: 'Monaco', monospace, monospace;
+    padding: 30px;
+}
+
+.loginBox {
+    padding: 12.5, 12.5%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Monaco', monospace, monospace;
+    background-color: white;
+}
+
+.accountContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 10vh;
+}
+
+.accountBox {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 25%;
+}

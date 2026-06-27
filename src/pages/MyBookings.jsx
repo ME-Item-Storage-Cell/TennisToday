@@ -96,111 +96,113 @@ export default function MyBookings() {
     }
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h1>My Bookings</h1>
-            
-            <div style={{ marginTop: '20px', marginBottom: '20px' }}>
-                <button
-                    onClick={() => {
-                        console.log('[MyBookings] Toggle button clicked - current was:', current)
-                        setCurrent(!current)
-                    }}
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: current ? '#007bff' : '#6c757d',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: 'pointer',
-                        fontSize: '16px'
-                    }}
-                >
-                    {current ? 'Show Past Bookings' : 'Show Current Bookings'}
-                </button>
-            </div>
-
-            {error && (
-                <div style={{ padding: '12px', backgroundColor: '#f8d7da', color: '#721c24', borderRadius: '4px', marginBottom: '20px' }}>
-                    {error}
+        <div className='pageContainer'>
+            <div className='pageBox'>
+                <h1 className='pageHeading'>My Bookings</h1>
+                
+                <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+                    <button
+                        onClick={() => {
+                            console.log('[MyBookings] Toggle button clicked - current was:', current)
+                            setCurrent(!current)
+                        }}
+                        style={{
+                            padding: '10px 20px',
+                            backgroundColor: current ? '#007bff' : '#6c757d',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            fontSize: '16px'
+                        }}
+                    >
+                        {current ? 'Show Past Bookings' : 'Show Current Bookings'}
+                    </button>
                 </div>
-            )}
 
-            {userBookings.length === 0 ? (
-                <p>No {current ? 'current' : 'past'} bookings found.</p>
-            ) : (
-                <table style={{
-                    width: '100%',
-                    borderCollapse: 'collapse',
-                    marginTop: '20px'
-                }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#f5f5f5' }}>
-                            <th style={{
-                                border: '1px solid #ddd',
-                                padding: '12px',
-                                fontWeight: 'bold',
-                                textAlign: 'left'
-                            }}>
-                                Court
-                            </th>
-                            <th style={{
-                                border: '1px solid #ddd',
-                                padding: '12px',
-                                fontWeight: 'bold',
-                                textAlign: 'left'
-                            }}>
-                                Booking Time
-                            </th>
-                            <th style={{
-                                border: '1px solid #ddd',
-                                padding: '12px',
-                                fontWeight: 'bold',
-                                textAlign: 'left'
-                            }}>
-                                Booking Code
-                            </th>
-                            <th style={{
-                                border: '1px solid #ddd',
-                                padding: '12px',
-                                fontWeight: 'bold',
-                                textAlign: 'left'
-                            }}>
-                                Equipment
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {userBookings.map((booking) => (
-                            <tr key={booking.id}>
-                                <td style={{
+                {error && (
+                    <div style={{ padding: '12px', backgroundColor: '#f8d7da', color: '#721c24', borderRadius: '4px', marginBottom: '20px' }}>
+                        {error}
+                    </div>
+                )}
+
+                {userBookings.length === 0 ? (
+                    <p>No {current ? 'current' : 'past'} bookings found.</p>
+                ) : (
+                    <table style={{
+                        width: '100%',
+                        borderCollapse: 'collapse',
+                        marginTop: '20px'
+                    }}>
+                        <thead>
+                            <tr style={{ backgroundColor: '#f5f5f5' }}>
+                                <th style={{
                                     border: '1px solid #ddd',
-                                    padding: '12px'
+                                    padding: '12px',
+                                    fontWeight: 'bold',
+                                    textAlign: 'left'
                                 }}>
-                                    Court {booking.CourtNum}
-                                </td>
-                                <td style={{
+                                    Court
+                                </th>
+                                <th style={{
                                     border: '1px solid #ddd',
-                                    padding: '12px'
+                                    padding: '12px',
+                                    fontWeight: 'bold',
+                                    textAlign: 'left'
                                 }}>
-                                    {formatDate(booking.BookingTime)}
-                                </td>
-                                <td style={{
+                                    Booking Time
+                                </th>
+                                <th style={{
                                     border: '1px solid #ddd',
-                                    padding: '12px'
+                                    padding: '12px',
+                                    fontWeight: 'bold',
+                                    textAlign: 'left'
                                 }}>
-                                    {booking.BookingCode}
-                                </td>
-                                <td style={{
+                                    Booking Code
+                                </th>
+                                <th style={{
                                     border: '1px solid #ddd',
-                                    padding: '12px'
+                                    padding: '12px',
+                                    fontWeight: 'bold',
+                                    textAlign: 'left'
                                 }}>
-                                    {booking.bookedEquipment ? 'Yes' : 'No'}
-                                </td>
+                                    Equipment
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
+                        </thead>
+                        <tbody>
+                            {userBookings.map((booking) => (
+                                <tr key={booking.id}>
+                                    <td style={{
+                                        border: '1px solid #ddd',
+                                        padding: '12px'
+                                    }}>
+                                        Court {booking.CourtNum}
+                                    </td>
+                                    <td style={{
+                                        border: '1px solid #ddd',
+                                        padding: '12px'
+                                    }}>
+                                        {formatDate(booking.BookingTime)}
+                                    </td>
+                                    <td style={{
+                                        border: '1px solid #ddd',
+                                        padding: '12px'
+                                    }}>
+                                        {booking.BookingCode}
+                                    </td>
+                                    <td style={{
+                                        border: '1px solid #ddd',
+                                        padding: '12px'
+                                    }}>
+                                        {booking.bookedEquipment ? 'Yes' : 'No'}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                )}
+            </div>
         </div>
     )
 }
