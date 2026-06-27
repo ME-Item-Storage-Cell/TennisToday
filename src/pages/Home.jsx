@@ -1,12 +1,33 @@
+import { useNavigate } from 'react-router-dom'
 import './PageStyling.css' ;
 
 export default function Home() {
+  const navigate = useNavigate()
+
   return (
     <main className='main'>
       <div className='pageContainer'>
           <div className='pageBox'>
           <div className="homeHeadingContainer">
-            <h1 className='homeTitleText'>TennisToday</h1>
+            <button
+              onClick={() => navigate('/court-booking')}
+              style={{
+                background: 'none',
+                border: 'none',
+                padding: 10,
+                margin: 0,
+                cursor: 'pointer',
+                fontFamily: 'Monaco, monospace, monospace',
+                color: 'white',
+                fontSize: '3em',
+                fontWeight: 'bold',
+                textDecoration: 'none',
+                outline: 'none',
+                width: '100%'
+              }}
+            >
+              TennisToday
+            </button>
           </div>
           <div>
             <div className='homeDescContainer'>
