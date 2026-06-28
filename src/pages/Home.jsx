@@ -31,10 +31,10 @@ export default function Home() {
             </button>
           </div>
           <div style={{ display: 'flex', gap: '20px', alignItems: 'center', flexWrap: 'wrap' }}>
-            <div className='homeDescContainer' style={{ flex: 1, minWidth: '300px' }}>
-              <p>TennisToday is a website aimed at letting all residents in a community make use of their local amenities, or, put simply, play tennis today! Using this site, you can book a court at your local venue, go there, and play tennis!</p>
+            <div className='homeDescContainer' style={{ flex: 1, minWidth: '250px', wordWrap: 'break-word', overflowWrap: 'break-word' }}>
+              <p style={{ margin: 0 }}>TennisToday is a website aimed at letting all residents in a community make use of their local amenities, or, put simply, play tennis today! Using this site, you can book a court at your local venue, go there, and play tennis!</p>
             </div>
-            <img src={homeImage} alt="Tennis court" style={{ width: '100%', maxWidth: '400px', borderRadius: '8px', flex: 1, minWidth: '300px' }}></img>
+            <img src={homeImage} alt="Tennis court" style={{ width: '100%', borderRadius: '8px', flex: 1, minWidth: '250px', height: 'auto' }}></img>
           </div>
         </div>
       </div>
