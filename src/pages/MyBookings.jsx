@@ -15,6 +15,8 @@ export default function MyBookings() {
         return today.toISOString()
     }
 
+
+    // loads user data
     useEffect(() => {
     async function loadSession() {
       const { data, error } = await supabase.auth.getSession()
@@ -44,6 +46,7 @@ export default function MyBookings() {
     }, [loading, session, navigate])
 
 
+    // fetches data from table, filtering by user, data, and sorting by time
     useEffect(() => {
         const fetchUserBookings = async () => {
             const { data, error } = await (
