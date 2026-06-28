@@ -11,6 +11,7 @@ export default function MyBookings() {
     const navigate = useNavigate()
     const getTodayString = () => {
         const today = new Date()
+        today.setMinutes(today.getMinutes() - 30)
         return today.toISOString()
     }
 
@@ -118,6 +119,11 @@ export default function MyBookings() {
                     </div>
                 )}
 
+                <div
+                    style={{
+                        overflowX: 'auto',
+                        marginTop: '20px'
+                    }}>
                 {userBookings.length === 0 ? (
                     <p>No {current ? 'current' : 'past'} bookings found.</p>
                 ) : (
@@ -194,6 +200,7 @@ export default function MyBookings() {
                         </tbody>
                     </table>
                 )}
+                </div>
             </div>
         </div>
     )

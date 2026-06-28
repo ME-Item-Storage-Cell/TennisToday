@@ -1,15 +1,15 @@
 .main{
-    padding: 0 12.5%;
+    padding: 0 5%;
 }
 
  /* Some default containers*/
 .pageContainer {
-    padding: 30px;
+    padding: 10px;
 }
 
 .pageBox {
     background-color: white;
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
 }
 
@@ -76,7 +76,22 @@
 
 .accountBox {
     background-color: white;
-    padding: 20px;
+    padding: 10px;
     border-radius: 8px;
     min-width: 40%;
+}
+
+.pinpadBox {
+    padding: 12.5, 12.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 400px;
+    padding: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-family: 'Monaco', monospace, monospace;
+    background-color: white;
 }

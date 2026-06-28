@@ -76,7 +76,7 @@ export default function Login() {
       }
       
     } else {
-      setMessage('Check your email for confirmation')
+      setMessage('Check your email for confirmation (Check junk!)')
     }
 
     setLoading(false)

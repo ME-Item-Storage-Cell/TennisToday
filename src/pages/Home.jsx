@@ -19,7 +19,7 @@ export default function Home() {
                 cursor: 'pointer',
                 fontFamily: 'Monaco, monospace, monospace',
                 color: 'white',
-                fontSize: '3em',
+                fontSize: 'clamp(1.5rem, 5vw, 3rem)',
                 fontWeight: 'bold',
                 textDecoration: 'none',
                 outline: 'none',
@@ -31,7 +31,7 @@ export default function Home() {
           </div>
           <div>
             <div className='homeDescContainer'>
-              <p>TennisToday is a website aimed at letting all residents in a community make use of their local amenities, or, put simply, play tennis today! Using this site, you can book a court at your local venue, go there, and play tennis! You can find a tutorial on how to use this website here.</p>
+              <p>TennisToday is a website aimed at letting all residents in a community make use of their local amenities, or, put simply, play tennis today! Using this site, you can book a court at your local venue, go there, and play tennis!</p>
             </div>
           </div>
         </div>

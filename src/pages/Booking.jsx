@@ -68,10 +68,11 @@ export default function Booking() {
   }
 
   return (
-    <div style={{ padding: '20px', alignItems: 'center' }}>
-      <h1>Booking</h1>
-      <div style={{ marginTop: '20px', padding: '20px', border: '1px solid #ddd', borderRadius: '8px', maxWidth: '500px', justifyContent: 'center', alignItems: 'center'}}>
-        <p style={{ margin: '0 0 12px', fontSize: '18px', fontWeight: 'bold' }}>Your selected booking:</p>
+    <div className='loginContainer'>
+      <div className='loginBox'>
+      <h1 style={{margin: '0'}}> Confirm your Booking</h1>
+      <div style={{ marginTop: '10px', padding: '10px', border: '1px solid #ddd', borderRadius: '8px', maxWidth: '500px', justifyContent: 'center', alignItems: 'center'}}>
+        <p style={{ margin: '0 0 12px', fontSize: '18px', fontWeight: 'bold' }}>Your booking details:</p>
         <div style={{ marginBottom: '8px' }}>
           <span style={{ fontWeight: '600' }}>Court:</span> Court {booking.court}
         </div>
@@ -130,6 +131,7 @@ export default function Booking() {
               Return
           </button>
         </div>
+      </div>
       </div>
     </div>
   )

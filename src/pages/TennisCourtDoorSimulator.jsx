@@ -42,6 +42,7 @@ export default function TennisCourtDoorSimulator() {
         now.setMinutes(minutes - (minutes % 30))
         now.setSeconds(0)
         now.setMilliseconds(0)
+        console.log(now.toISOString())
         return now.toISOString()
     }
 
@@ -50,10 +51,12 @@ export default function TennisCourtDoorSimulator() {
         const { data, error } = await supabase
             .from('Venue1_Bookings')
             .select('*')
-            .eq('Booker', session.user.id)
+            .eq('CourtNum', courtChoice)
             .eq('BookingTime', getBookingPeriod())
             .eq('BookingCode', bookingCode)
 
+        console.log(data)
+        console.log(bookingCode)
         if (error) {
             setError(error.message)
             return
@@ -69,15 +72,16 @@ export default function TennisCourtDoorSimulator() {
 
     return (
         <div className='loginContainer'>
-            <div className='loginBox'>
-            <h1 className='pageHeading'>Tennis Court Pin-pad</h1>
+            <div className='pinpadBox'>
+            <h1 className='pageHeading'>Tennis Court Pinpad</h1>
             <p style={{margin: '0'}}>Select a court:</p>
             
-            <div style={{ display: 'flex', gap: '10px', padding: '5px 0px' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '10px', padding: '5px 0px', overflowX: 'auto', overflowY: 'hidden' }}>
                 
                 <button
                     onClick={() => {
                         setCourtChoice(1)
+                        console.log(courtChoice)
                     }}
                     style={{ padding: '6px 12px', backgroundColor: courtChoice === 1 ? '#007bff' : '#e0e0e0', color: courtChoice === 1 ? 'white' : '#333', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '12px', transition: 'background-color 0.2s, color 0.2s' }}
                     aria-label="Select Court 1"
